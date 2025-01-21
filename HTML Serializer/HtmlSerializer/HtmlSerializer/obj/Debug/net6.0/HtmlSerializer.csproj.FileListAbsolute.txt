@@ -1,0 +1,16 @@
+C:\שני\תכנות\שנה שניה\practicode2\HTML Serializer\HtmlSerializer\HtmlSerializer\bin\Debug\net6.0\HtmlSerializer.exe
+C:\שני\תכנות\שנה שניה\practicode2\HTML Serializer\HtmlSerializer\HtmlSerializer\bin\Debug\net6.0\HtmlSerializer.deps.json
+C:\שני\תכנות\שנה שניה\practicode2\HTML Serializer\HtmlSerializer\HtmlSerializer\bin\Debug\net6.0\HtmlSerializer.runtimeconfig.json
+C:\שני\תכנות\שנה שניה\practicode2\HTML Serializer\HtmlSerializer\HtmlSerializer\bin\Debug\net6.0\HtmlSerializer.dll
+C:\שני\תכנות\שנה שניה\practicode2\HTML Serializer\HtmlSerializer\HtmlSerializer\bin\Debug\net6.0\HtmlSerializer.pdb
+C:\שני\תכנות\שנה שניה\practicode2\HTML Serializer\HtmlSerializer\HtmlSerializer\obj\Debug\net6.0\HtmlSerializer.GeneratedMSBuildEditorConfig.editorconfig
+C:\שני\תכנות\שנה שניה\practicode2\HTML Serializer\HtmlSerializer\HtmlSerializer\obj\Debug\net6.0\HtmlSerializer.AssemblyInfoInputs.cache
+C:\שני\תכנות\שנה שניה\practicode2\HTML Serializer\HtmlSerializer\HtmlSerializer\obj\Debug\net6.0\HtmlSerializer.AssemblyInfo.cs
+C:\שני\תכנות\שנה שניה\practicode2\HTML Serializer\HtmlSerializer\HtmlSerializer\obj\Debug\net6.0\HtmlSerializer.csproj.CoreCompileInputs.cache
+C:\שני\תכנות\שנה שניה\practicode2\HTML Serializer\HtmlSerializer\HtmlSerializer\obj\Debug\net6.0\HtmlSerializer.dll
+C:\שני\תכנות\שנה שניה\practicode2\HTML Serializer\HtmlSerializer\HtmlSerializer\obj\Debug\net6.0\refint\HtmlSerializer.dll
+C:\שני\תכנות\שנה שניה\practicode2\HTML Serializer\HtmlSerializer\HtmlSerializer\obj\Debug\net6.0\HtmlSerializer.pdb
+C:\שני\תכנות\שנה שניה\practicode2\HTML Serializer\HtmlSerializer\HtmlSerializer\obj\Debug\net6.0\HtmlSerializer.genruntimeconfig.cache
+C:\שני\תכנות\שנה שניה\practicode2\HTML Serializer\HtmlSerializer\HtmlSerializer\obj\Debug\net6.0\ref\HtmlSerializer.dll
+C:\שני\תכנות\שנה שניה\practicode2\HTML Serializer\HtmlSerializer\HtmlSerializer\bin\Debug\net6.0\JSON Files\HtmlTags.json
+C:\שני\תכנות\שנה שניה\practicode2\HTML Serializer\HtmlSerializer\HtmlSerializer\bin\Debug\net6.0\JSON Files\HtmlVoidTags.json
