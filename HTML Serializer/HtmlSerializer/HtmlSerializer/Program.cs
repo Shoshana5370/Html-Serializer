@@ -1,16 +1,6 @@
 ﻿using HtmlSerializer;
 using System.Text.RegularExpressions;
-//static List<string> func2(string input)
-//{
-//    string noOtherSpaces = Regex.Replace(input, @"[^\S ]+", "");
-//    string cleanString = Regex.Replace(noOtherSpaces, @" {2,}", " ");
-//    List<string> htmlLines = new Regex("<(.*?)>").Split(cleanString).Where(s => s.Length > 0).ToList();
-//    List<string> listWithoutEmptyLines = new List<string>();
-//    foreach (var line in htmlLines)
-//        if (line != " ")
-//            listWithoutEmptyLines.Add(line);
-//    return listWithoutEmptyLines;
-//}
+
 static HtmlElement BuildTree(List<string> lines)
 {
     HtmlElement root = new();
@@ -26,7 +16,7 @@ static HtmlElement BuildTree(List<string> lines)
             tag = tag[..tag.IndexOf(' ')];
         }
 
-        if ('/' == lines[i][0])//up to the parent back
+        if ('/' == lines[i][0])
         {
             current = current.Parent;
         }
@@ -65,33 +55,12 @@ static async Task<string> Load(string url)
     var html = await response.Content.ReadAsStringAsync();
     return html;
 }
-var html = await Load("https://chani-k.co.il/sherlok-game/");
+var html = await Load("https://hebrewbooks.org");
 var cleanHtml = Regex.Replace(html, @"[\r\n]+", "");
 var linesHtml = new Regex("<(.*?)>").Split(cleanHtml).Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
 linesHtml.RemoveAt(0);
 HtmlElement tree=BuildTree(linesHtml);
-Selector selector = Selector.CastQueryToSelector("body div#copyright div.copyR");
-var resualt=tree.FindElementsBySelector(selector);
-
-
-
-
-//Selector s = Selector.CastQueryToSelector("div p#p1 .class1");
-//Selector s1 = Selector.CastQueryToSelector("div.claasss p.ckj#p1 .class1 p");
-//Selector s2 = Selector.CastQueryToSelector("div#nydiv.c1");
-//Selector s3 = Selector.CastQueryToSelector("div #nydiv .c1");
-//Console.WriteLine();
-
-
-//var cleanHtml = new Regex("\\t|\\r|\\n").Replace(html, " ");
-//var lines = Regex.Matches(cleanHtml, @"<\/?([A-Za-z][A-Za-z0-9]*)\b[^>]*>|([^<]+)");
-//List<string> htmlLines = new List<string>();
-//foreach (var line in lines)
-//{
-//    string l = line.ToString();
-//    l = l.Replace('<', ' ');
-//    l = l.Replace('>', ' ');
-//    l = l.Trim();
-//    if (!string.IsNullOrWhiteSpace(l))
-//        htmlLines.Add(l);
-//}
+Selector selector = Selector.CastQueryToSelector("div img");
+var resualt = tree.FindElementsBySelector(selector);
+resualt.ToList().ForEach(i=> Console.WriteLine(i));
+Console.WriteLine("--------------");

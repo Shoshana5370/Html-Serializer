@@ -1,6 +1,6 @@
 ﻿namespace HtmlSerializer
 {
-    public static class Extension
+    public static class ExtensionHtmlElement
     {
         public static HashSet<HtmlElement> FindElementsBySelector(this HtmlElement element, Selector selector)
         {
@@ -28,7 +28,6 @@
 
         private static bool MatchesSelector(HtmlElement element, Selector selector)
         {
-            // בדוק אם האלמנט תואם לסלקטור הנוכחי
             if (!string.IsNullOrEmpty(selector.TagName) && element.Name != selector.TagName)
             {
                 return false;

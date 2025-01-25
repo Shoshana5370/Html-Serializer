@@ -41,5 +41,17 @@ namespace HtmlSerializer
                 yield return e.Parent;
             }
         }
+
+        public override string ToString()
+        {
+            // Building a string representation of the HtmlElement
+            var classString = Classes.Count > 0 ? string.Join(" ", Classes) : "No Classes";
+            var attributesString = Attributes.Count > 0
+                ? string.Join(", ", Attributes.Select(a => $"{a.Key}=\"{a.Value}\""))
+                : "No Attributes";
+
+            return $"Element: {Name}, Id: {Id}, Classes: [{classString}], Attributes: {{{attributesString}}}, InnerHtml: {InnerHtml}";
+        }
+
     }
 }
