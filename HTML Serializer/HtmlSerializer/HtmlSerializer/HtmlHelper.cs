@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace HtmlSerializer
 {
-    internal class HtmlHelper
+    public class HtmlHelper
     {
         private readonly static HtmlHelper _instance=new HtmlHelper();
-        public static HtmlHelper Instance =>_instance;
+        public static HtmlHelper Helper =>_instance;
 
         public  string[] TagsHtml { get; set; }
         public string[] TagsHtmlUnclosing { get; set; }

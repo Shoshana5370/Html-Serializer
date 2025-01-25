@@ -1,81 +1,97 @@
-﻿
-using HtmlSerializer;
+﻿using HtmlSerializer;
 using System.Text.RegularExpressions;
-var html = await Load("http://hebrewbooks.org/beis");
-var cleanHtml = Regex.Replace(html, @"[\r\n]+", "");
-var HtmlLInes = new Regex("<(.*?)>").Split(cleanHtml).Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
-HtmlLInes.RemoveAt(0);
-HtmlElement current=new();
-for (int i = 0; i < HtmlLInes.Count; i++)
+//static List<string> func2(string input)
+//{
+//    string noOtherSpaces = Regex.Replace(input, @"[^\S ]+", "");
+//    string cleanString = Regex.Replace(noOtherSpaces, @" {2,}", " ");
+//    List<string> htmlLines = new Regex("<(.*?)>").Split(cleanString).Where(s => s.Length > 0).ToList();
+//    List<string> listWithoutEmptyLines = new List<string>();
+//    foreach (var line in htmlLines)
+//        if (line != " ")
+//            listWithoutEmptyLines.Add(line);
+//    return listWithoutEmptyLines;
+//}
+static HtmlElement BuildTree(List<string> lines)
 {
-    string tag = HtmlLInes[i];
-    if ('/' == HtmlLInes[i][0])//up to the parent back
+    HtmlElement root = new();
+    HtmlElement current = new()
     {
-        current = current.Parent;
-    }
+        Parent = root
+    };
+    for (int i = 0; i < lines.Count && lines[i] != "/html"; i++)//build tree;
+    {
+        string tag = lines[i];
+        if (lines[i].Contains(' '))
+        {
+            tag = tag[..tag.IndexOf(' ')];
+        }
 
-    if (HtmlHelper.Instance.TagsHtml.Contains(tag))
-    {  
+        if ('/' == lines[i][0])//up to the parent back
+        {
+            current = current.Parent;
+        }
 
-        HtmlElement childElement = new();
-        childElement.Name = tag;
-        current.Parent.Children.Add(childElement);
-        if(HtmlHelper.Instance.TagsHtmlUnclosing.Contains(tag))
+        else if (HtmlHelper.Helper.TagsHtml.Contains(tag))
         {
 
+            HtmlElement childElement = new();
+            childElement.Name = tag;
+            childElement.Parent = current;
+            childElement.Attributes = new Regex("([^\\s]*?)=\"(.*?)\"").Matches(lines[i]).Cast<Match>()
+                .ToDictionary(m => m.Groups[1].Value, m => m.Groups[2].Value);
+            if (childElement.Attributes.ContainsKey("id"))
+                childElement.Id = childElement.Attributes["id"];
+            if (childElement.Attributes.ContainsKey("class"))
+            {
+                childElement.Classes = childElement.Attributes["class"].Split(" ").ToList();
+            }
+            current.Children.Add(childElement);
+            if (!HtmlHelper.Helper.TagsHtmlUnclosing.Contains(tag))
+            {
+                current = childElement;
+            }
         }
         else
         {
-
+            current.InnerHtml = lines[i];
         }
     }
-    else
-    {
-        current.InnerHtml = HtmlLInes[i];
-    }
+    return current;
 }
-
-
-//for(int i = 1; i < htmlLines.Length; i++)
-//    {
-//    string s = htmlLines[i].Substring(0, htmlLines[i].IndexOf(' '));
-//    if (s[0] == '/')
-//    {
-//        //htmlTag מלא בכל הנתונים
-//        //currentElement.Parent.Children.Add(htmlTag);//הוספה בתור ילד לאבא
-//        currentElement = currentElement.Parent;//עלייה לאבא
-//    }
-//    else if (HtmlHelper.Instance.AllHtmlTags.Contains(s))
-//    {
-//        htmlTag = new HtmlTag();
-//        currentElement.Parent.Children.Add(htmlTag);//הוספה בתור ילד לאבא
-
-//        htmlTag.Attributes = new Regex("([^\\s]*?)=\"(.*?)\"").Matches(htmlLines[i]);
-
-//        if (HtmlHelper.Instance.HtmlVoidTags.Contains(s))//תגית יחידה
-//        {
-//            //img src="learn/assets/images/quote.png" alt=""
-
-
-//            currentElement.Parent.Children.Add(htmlTag);//הוספה בתור ילד לאבא
-//            currentElement = currentElement.Parent;//עלייה לאבא
-//        }
-//        else
-//        {
-
-//        }
-//    }
-//    else
-//    {
-//        // אני לא תגית - חייב להיות תוכן
-//        htmlTag.InnerHtml += htmlLines[i];
-//    }
-//var Atrribute=new Regex("([^\\s]*?)=\"(.*?)\"").Matches(html);////htmlElement
-Console.WriteLine( "jnubjvgf");
-    async Task<string> Load(string url)
+static async Task<string> Load(string url)
 {
     HttpClient client = new HttpClient();
     var response = await client.GetAsync(url);
     var html = await response.Content.ReadAsStringAsync();
     return html;
 }
+var html = await Load("https://chani-k.co.il/sherlok-game/");
+var cleanHtml = Regex.Replace(html, @"[\r\n]+", "");
+var linesHtml = new Regex("<(.*?)>").Split(cleanHtml).Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+linesHtml.RemoveAt(0);
+HtmlElement tree=BuildTree(linesHtml);
+Selector selector = Selector.CastQueryToSelector("body div#copyright div.copyR");
+var resualt=tree.FindElementsBySelector(selector);
+
+
+
+
+//Selector s = Selector.CastQueryToSelector("div p#p1 .class1");
+//Selector s1 = Selector.CastQueryToSelector("div.claasss p.ckj#p1 .class1 p");
+//Selector s2 = Selector.CastQueryToSelector("div#nydiv.c1");
+//Selector s3 = Selector.CastQueryToSelector("div #nydiv .c1");
+//Console.WriteLine();
+
+
+//var cleanHtml = new Regex("\\t|\\r|\\n").Replace(html, " ");
+//var lines = Regex.Matches(cleanHtml, @"<\/?([A-Za-z][A-Za-z0-9]*)\b[^>]*>|([^<]+)");
+//List<string> htmlLines = new List<string>();
+//foreach (var line in lines)
+//{
+//    string l = line.ToString();
+//    l = l.Replace('<', ' ');
+//    l = l.Replace('>', ' ');
+//    l = l.Trim();
+//    if (!string.IsNullOrWhiteSpace(l))
+//        htmlLines.Add(l);
+//}
